@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Hive2\ByteArrayOutputStream.cs" />
     <Compile Include="Hive2\EncodingUtils.cs" />
+    <Compile Include="Hive2\Helper.cs" />
     <Compile Include="Hive2\HiveConnection.cs" />
     <Compile Include="Hive2\HiveCursor.cs" />
     <Compile Include="Hive2\PlainMechanism.cs" />
