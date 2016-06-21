@@ -153,16 +153,26 @@ namespace Hive2
 
         public TRowSet Fetch(int count = int.MaxValue)
         {
-            if (m_Operation == null || !m_Operation.HasResultSet) return null;
-            var req = new TFetchResultsReq()
+            if(m_Operation != null & m_Operation.HasResultSet)
             {
-                MaxRows = count,
-                Orientation = TFetchOrientation.FETCH_NEXT,
-                OperationHandle = m_Operation,
-            };
-            var resultsResp = m_Client.FetchResults(req);
-            resultsResp.Status.CheckStatus();
-            return resultsResp.Results;
+                TRowSet rowSet = null;
+                bool hasMoreRows = true;
+                while (hasMoreRows)
+                {
+                    var req = new TFetchResultsReq()
+                    {
+                        MaxRows = count,
+                        Orientation = TFetchOrientation.FETCH_NEXT,
+                        OperationHandle = m_Operation,
+                    };
+                    var resultsResp = m_Client.FetchResults(req);
+                    resultsResp.Status.CheckStatus();
+                    hasMoreRows = resultsResp.HasMoreRows;
+                    rowSet = Utils.Combine(rowSet,resultsResp.Results);
+                }
+                return rowSet;
+            }
+            return null;
         }
 
         private List<string> GetColumnNames()

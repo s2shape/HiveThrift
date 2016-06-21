@@ -75,5 +75,26 @@ namespace Hive2
                 yield return result;
             }
         }
+
+        public static TRowSet Combine(TRowSet rowSet1, TRowSet rowSet2)
+        {
+            //if(rowSet1 == null)
+            //{
+            //    return rowSet2;
+            //}
+            //if(rowSet2 == null)
+            //{
+            //    return rowSet1;
+            //}
+            ////rowSet1.Rows;
+            //foreach(var colOfRowSet1 in rowSet1.Columns)
+            //{
+            //    foreach(var colOfRowSet2 in rowSet2.Columns)
+            //    {
+
+            //    }
+            //}
+            return rowSet2;
+        }
     }
 }
