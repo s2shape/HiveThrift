@@ -92,11 +92,12 @@ namespace Hive2
                 throw new ArgumentException("two rowset should have same columns");
             }
             TRowSet result = new TRowSet();
+            result.StartRowOffset = rowSet1.StartRowOffset + rowSet2.StartRowOffset;
+            result.Rows = new List<TRow>();
+            
             result.Columns = new List<TColumn>();
-
             for (int i = 0; i < rowSet1.Columns.Count; i++)
             {
-                //what is _isset?
                 TColumn combinedColumn = new TColumn();
                 
                 TColumn col1 = rowSet1.Columns[i];
@@ -161,10 +162,9 @@ namespace Hive2
                     combinedColumn.StringVal.Values.AddRange((col2.StringVal?.Values)??new List<string>());
                     combinedColumn.__isset.stringVal = true;
                 }
-
+                
                 result.Columns.Add(combinedColumn);
             }
-
             return result;
         }
     }
