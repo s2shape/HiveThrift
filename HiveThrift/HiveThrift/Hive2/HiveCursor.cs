@@ -168,7 +168,8 @@ namespace Hive2
                     var resultsResp = m_Client.FetchResults(req);
                     resultsResp.Status.CheckStatus();
                     hasMoreRows = resultsResp.HasMoreRows;
-                    rowSet = Utils.Combine(rowSet,resultsResp.Results);
+                    rowSet = Utils.CombineColumnValues(rowSet,resultsResp.Results);
+                    rowSet.StartRowOffset = resultsResp.Results.StartRowOffset;
                 }
                 return rowSet;
             }

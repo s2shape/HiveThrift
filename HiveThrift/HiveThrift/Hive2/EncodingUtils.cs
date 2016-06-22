@@ -77,7 +77,7 @@ namespace Hive2
             }
         }
 
-        public static TRowSet Combine(TRowSet rowSet1, TRowSet rowSet2)
+        public static TRowSet CombineColumnValues(TRowSet rowSet1, TRowSet rowSet2)
         {
             if (rowSet1 == null)
             {
@@ -92,7 +92,6 @@ namespace Hive2
                 throw new ArgumentException("two rowset should have same columns");
             }
             TRowSet result = new TRowSet();
-            result.StartRowOffset = rowSet1.StartRowOffset + rowSet2.StartRowOffset;
             result.Rows = new List<TRow>();
             
             result.Columns = new List<TColumn>();
