@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -74,6 +75,96 @@ namespace Hive2
                 sendCount += count;
                 yield return result;
             }
+        }
+
+        public static TRowSet CombineColumnValues(TRowSet rowSet1, TRowSet rowSet2)
+        {
+            if (rowSet1 == null)
+            {
+                return rowSet2;
+            }
+            if (rowSet2 == null)
+            {
+                return rowSet1;
+            }
+            if(rowSet1.Columns.Count != rowSet2.Columns.Count)
+            {
+                throw new ArgumentException("two rowset should have same columns");
+            }
+            TRowSet result = new TRowSet();
+            result.Rows = new List<TRow>();
+            
+            result.Columns = new List<TColumn>();
+            for (int i = 0; i < rowSet1.Columns.Count; i++)
+            {
+                TColumn combinedColumn = new TColumn();
+                
+                TColumn col1 = rowSet1.Columns[i];
+                TColumn col2 = rowSet2.Columns[i];
+                Trace.Assert(col1 != null && col2 != null);
+
+                if (col1.__isset.binaryVal || col2.__isset.binaryVal)
+                {
+                    combinedColumn.BinaryVal = new TBinaryColumn() { Values = new List<byte[]>()};
+                    combinedColumn.BinaryVal.Values.AddRange((col1.BinaryVal?.Values)??new List<byte[]>());
+                    combinedColumn.BinaryVal.Values.AddRange((col2.BinaryVal?.Values)??new List<byte[]>());
+                    combinedColumn.__isset.binaryVal = true;
+                }
+
+                if (col1.__isset.boolVal || col2.__isset.boolVal)
+                {
+                    combinedColumn.BoolVal = new TBoolColumn() { Values = new List<bool>() };
+                    combinedColumn.BoolVal.Values.AddRange((col1.BoolVal?.Values)??new List<bool>());
+                    combinedColumn.BoolVal.Values.AddRange((col2.BoolVal?.Values)??new List<bool>());
+                    combinedColumn.__isset.boolVal = true;
+                }
+
+                if (col1.__isset.byteVal || col2.__isset.byteVal)
+                {
+                    combinedColumn.ByteVal = new TByteColumn() { Values = new List<sbyte>() };
+                    combinedColumn.ByteVal.Values.AddRange((col1.ByteVal?.Values)??new List<sbyte>());
+                    combinedColumn.ByteVal.Values.AddRange((col2.ByteVal?.Values)??new List<sbyte>());
+                    combinedColumn.__isset.binaryVal = true;
+                }
+                if (col1.__isset.doubleVal || col2.__isset.doubleVal)
+                {
+                    combinedColumn.DoubleVal = new TDoubleColumn() { Values = new List<double>() };
+                    combinedColumn.DoubleVal.Values.AddRange((col1.DoubleVal?.Values)??new List<double>());
+                    combinedColumn.DoubleVal.Values.AddRange((col2.DoubleVal?.Values)??new List<double>());
+                    combinedColumn.__isset.doubleVal = true;
+                }
+                if (col1.__isset.i16Val || col2.__isset.i16Val)
+                {
+                    combinedColumn.I16Val = new TI16Column() { Values = new List<short>() };
+                    combinedColumn.I16Val.Values.AddRange((col1.I16Val?.Values)??new List<short>());
+                    combinedColumn.I16Val.Values.AddRange((col2.I16Val?.Values)??new List<short>());
+                    combinedColumn.__isset.i16Val = true;
+                }
+                if (col1.__isset.i32Val|| col2.__isset.i32Val)
+                {
+                    combinedColumn.I32Val = new TI32Column() { Values = new List<int>() };
+                    combinedColumn.I32Val.Values.AddRange((col1.I32Val?.Values)??new List<int>());
+                    combinedColumn.I32Val.Values.AddRange((col2.I32Val?.Values)??new List<int>());
+                    combinedColumn.__isset.i32Val = true;
+                }
+                if (col1.__isset.i64Val || col1.__isset.i64Val)
+                {
+                    combinedColumn.I64Val = new TI64Column() { Values = new List<long>() };
+                    combinedColumn.I64Val.Values.AddRange((col1.I64Val?.Values)??new List<long>());
+                    combinedColumn.I64Val.Values.AddRange((col2.I64Val?.Values)??new List<long>());
+                    combinedColumn.__isset.i64Val = true;
+                }
+                if (col1.__isset.stringVal || col2.__isset.stringVal)
+                {
+                    combinedColumn.StringVal = new TStringColumn() { Values = new List<string>() };
+                    combinedColumn.StringVal.Values.AddRange((col1.StringVal?.Values)??new List<string>());
+                    combinedColumn.StringVal.Values.AddRange((col2.StringVal?.Values)??new List<string>());
+                    combinedColumn.__isset.stringVal = true;
+                }
+                
+                result.Columns.Add(combinedColumn);
+            }
+            return result;
         }
     }
 }

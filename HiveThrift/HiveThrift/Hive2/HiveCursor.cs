@@ -148,21 +148,33 @@ namespace Hive2
                 return value.I16Val.Value;
             else
                 return null;
-        } 
+        }
         #endregion
 
         public TRowSet Fetch(int count = int.MaxValue)
         {
-            if (m_Operation == null || !m_Operation.HasResultSet) return null;
-            var req = new TFetchResultsReq()
+            if(m_Operation != null & m_Operation.HasResultSet)
             {
-                MaxRows = count,
-                Orientation = TFetchOrientation.FETCH_NEXT,
-                OperationHandle = m_Operation,
-            };
-            var resultsResp = m_Client.FetchResults(req);
-            resultsResp.Status.CheckStatus();
-            return resultsResp.Results;
+                TRowSet rowSet = null;
+                bool hasMoreRows = true;
+                int totalRowsRead = 0;
+                while (hasMoreRows)
+                {
+                    var req = new TFetchResultsReq()
+                    {
+                        MaxRows = count - totalRowsRead,
+                        Orientation = TFetchOrientation.FETCH_NEXT,
+                        OperationHandle = m_Operation,
+                    };
+                    var resultsResp = m_Client.FetchResults(req);
+                    resultsResp.Status.CheckStatus();
+                    rowSet = Utils.CombineColumnValues(rowSet,resultsResp.Results);
+                    totalRowsRead = GetrValue(rowSet.Columns[0]).Count;
+                    hasMoreRows = resultsResp.HasMoreRows && totalRowsRead < count ;
+                }
+                return rowSet;
+            }
+            return null;
         }
 
         private List<string> GetColumnNames()
