@@ -150,7 +150,7 @@ namespace Hive2
                 return null;
         }
         #endregion
-        int batch_size = 1024;//todo:batch size can be read from server
+
         public TRowSet Fetch(int count = int.MaxValue)
         {
             if(m_Operation != null & m_Operation.HasResultSet)
@@ -162,7 +162,7 @@ namespace Hive2
                 {
                     var req = new TFetchResultsReq()
                     {
-                        MaxRows = (count - totalRowsRead)>=batch_size?batch_size:count%batch_size,//最后一个batch用于精准的读取残余数据
+                        MaxRows = count - totalRowsRead,
                         Orientation = TFetchOrientation.FETCH_NEXT,
                         OperationHandle = m_Operation,
                     };

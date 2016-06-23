@@ -13,7 +13,7 @@ namespace HiveThrift.Testing
         [TestMethod]
         public void TestMethod1()
         {
-            string sql = "select 1 from session limit 500";
+            string sql = "select 1 from session limit 3000";
             using (var dbConnection = new Connection(new TSocket("10.200.40.230", 21050)))
             {
                 using (Cursor cursor = dbConnection.GetCursor())
@@ -25,7 +25,7 @@ namespace HiveThrift.Testing
                     //切换到对应的数据库
                     cursor.Execute($"use wdtest");
                     cursor.Execute(sql);
-                    List<ExpandoObject> data = cursor.FetchMany(300);
+                    List<ExpandoObject> data = cursor.FetchMany(1);
                     int sb = data.Count;
                 }
             }
