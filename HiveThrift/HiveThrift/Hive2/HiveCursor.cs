@@ -157,19 +157,21 @@ namespace Hive2
             {
                 TRowSet rowSet = null;
                 bool hasMoreRows = true;
+
                 while (hasMoreRows)
                 {
                     var req = new TFetchResultsReq()
                     {
-                        MaxRows = count,
+                        MaxRows = count % 1024,//todo:batch size can be read from server
                         Orientation = TFetchOrientation.FETCH_NEXT,
                         OperationHandle = m_Operation,
                     };
                     var resultsResp = m_Client.FetchResults(req);
                     resultsResp.Status.CheckStatus();
-                    hasMoreRows = resultsResp.HasMoreRows;
+
                     rowSet = Utils.CombineColumnValues(rowSet,resultsResp.Results);
-                    rowSet.StartRowOffset = resultsResp.Results.StartRowOffset;
+                    int totalDataRead = GetrValue(rowSet.Columns[0]).Count;
+                    hasMoreRows = resultsResp.HasMoreRows && totalDataRead <count ;
                 }
                 return rowSet;
             }
