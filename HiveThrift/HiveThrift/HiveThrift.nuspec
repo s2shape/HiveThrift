@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Gridsum.HiveThrift</id>
+    <version>0.1.3</version>
+    <title>Gridsum.HiveThrift</title>
+    <authors>GridsumDevTeam</authors>
+    <owners>GridsumDevTeam</owners>
+    <projectUrl>https://github.com/gridsum/HiveThrift</projectUrl>
+    <iconUrl>http://www.gridsum.com/templets/gs/images/slogo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>support thrift hive server / thrift hive server 2(spark sql use hive server 2)</description>
+    <releaseNotes>
+       0.1.3:
+        1 Multi batch fetch logic; 2 Connection class' ctor can inject TTransport now 
+     </releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>hive thrift</tags>
+  </metadata>
+</package>
