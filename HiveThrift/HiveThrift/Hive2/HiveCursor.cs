@@ -148,30 +148,29 @@ namespace Hive2
                 return value.I16Val.Value;
             else
                 return null;
-        } 
+        }
         #endregion
-
+        int batch_size = 1024;//todo:batch size can be read from server
         public TRowSet Fetch(int count = int.MaxValue)
         {
             if(m_Operation != null & m_Operation.HasResultSet)
             {
                 TRowSet rowSet = null;
                 bool hasMoreRows = true;
-
+                int totalRowsRead = 0;
                 while (hasMoreRows)
                 {
                     var req = new TFetchResultsReq()
                     {
-                        MaxRows = count % 1024,//todo:batch size can be read from server
+                        MaxRows = (count - totalRowsRead)>=batch_size?batch_size:count%batch_size,//最后一个batch用于精准的读取残余数据
                         Orientation = TFetchOrientation.FETCH_NEXT,
                         OperationHandle = m_Operation,
                     };
                     var resultsResp = m_Client.FetchResults(req);
                     resultsResp.Status.CheckStatus();
-
                     rowSet = Utils.CombineColumnValues(rowSet,resultsResp.Results);
-                    int totalDataRead = GetrValue(rowSet.Columns[0]).Count;
-                    hasMoreRows = resultsResp.HasMoreRows && totalDataRead <count ;
+                    totalRowsRead = GetrValue(rowSet.Columns[0]).Count;
+                    hasMoreRows = resultsResp.HasMoreRows && totalRowsRead < count ;
                 }
                 return rowSet;
             }
