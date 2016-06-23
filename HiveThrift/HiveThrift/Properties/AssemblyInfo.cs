@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("HiveThrift")]
-[assembly: AssemblyDescription("Author: Victor.X.Qu")]
+[assembly: AssemblyDescription("Author: GridsumDevTeam")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Newegg")]
+[assembly: AssemblyCompany("Gridsum")]
 [assembly: AssemblyProduct("HiveThrift")]
-[assembly: AssemblyCopyright("Copyright © Newegg 2015")]
+[assembly: AssemblyCopyright("Copyright © Gridsum 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
