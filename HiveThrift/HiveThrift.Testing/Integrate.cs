@@ -13,17 +13,13 @@ namespace HiveThrift.Testing
         [TestMethod]
         public void TestMethod1()
         {
-            string sql = "select 1 from session limit 3000";
-            using (var dbConnection = new Connection(new TSocket("10.200.40.230", 21050)))
+            string sql = "select 1 from xxxx limit 3000";
+            using (var dbConnection = new Connection(new TSocket("xxxx", 1234)))
             {
                 using (Cursor cursor = dbConnection.GetCursor())
                 {
-                    //set query pool or queue name
-                    cursor.Execute("set REQUEST_POOL='hadoop-wd'");
-                    //set memory size per query per node,total mem=mem_limit* count of nodes
-                    cursor.Execute("set MEM_LIMIT=20gb");
                     //切换到对应的数据库
-                    cursor.Execute($"use wdtest");
+                    cursor.Execute($"use xxxx");
                     cursor.Execute(sql);
                     List<ExpandoObject> data = cursor.FetchMany(1);
                     int sb = data.Count;
