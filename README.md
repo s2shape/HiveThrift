@@ -1,4 +1,4 @@
-# HiveThrift
+﻿# HiveThrift
 
 本项目是c#版hive thrift 的简单封装
 
@@ -12,4 +12,4 @@ spark sql 的例子：../HiveThrift/Example/Program.cs
 
 ## Nuget
 
-https://www.nuget.org/packages/HiveThrift/0.1.0
+https://www.nuget.org/packages/Gridsum.HiveThrift/0.1.3
