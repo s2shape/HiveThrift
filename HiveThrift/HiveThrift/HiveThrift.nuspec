@@ -2,7 +2,6 @@
 <package >
   <metadata>
     <id>Gridsum.HiveThrift</id>
-    <version>0.1.5</version>
     <title>Gridsum.HiveThrift</title>
     <authors>GridsumDevTeam</authors>
     <owners>GridsumDevTeam</owners>
@@ -15,6 +14,8 @@
         1 Multi batch fetch logic; 2 Connection class' ctor can inject TTransport now 
 	   0.1.5:
 		add username support
+		0.1.5.1:
+		make it capitable with .net framework 4.0
 	 </releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags>hive thrift</tags>
