@@ -12,4 +12,4 @@ spark sql 的例子：../HiveThrift/Example/Program.cs
 
 ## Nuget
 
-https://www.nuget.org/packages/Gridsum.HiveThrift/0.1.3
+https://www.nuget.org/packages/Gridsum.HiveThrift
