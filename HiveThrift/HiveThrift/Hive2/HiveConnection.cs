@@ -21,8 +21,8 @@ namespace Hive2
         private TCLIService.Client m_Client;
         private TSessionHandle m_Session;
         private TProtocolVersion m_Version;
-
-        public Connection(string host, int port, string userName = "None", string password = "None",
+        private string m_userName;
+        public Connection(string host, int port, string userName = null, string password = "None",
             TProtocolVersion version = TProtocolVersion.HIVE_CLI_SERVICE_PROTOCOL_V7)
         {
             var socket = new TSocket(host, port);
@@ -30,14 +30,16 @@ namespace Hive2
             var protocol = new TBinaryProtocol(m_Transport);
             m_Client = new TCLIService.Client(protocol);
             m_Version = version;
+            m_userName = userName;
         }
-
-        public Connection(TTransport transport,TProtocolVersion version = TProtocolVersion.HIVE_CLI_SERVICE_PROTOCOL_V7)
+       
+        public Connection(TTransport transport,string userName = null,TProtocolVersion version = TProtocolVersion.HIVE_CLI_SERVICE_PROTOCOL_V7)
         {
             m_Transport = transport;
             var protocol = new TBinaryProtocol(m_Transport);
             m_Client = new TCLIService.Client(protocol);
             m_Version = version;
+            m_userName = userName;
         }
 
         ~Connection()
@@ -48,7 +50,9 @@ namespace Hive2
         private TSessionHandle GetSession()
         {
             TOpenSessionReq openReq = new TOpenSessionReq(m_Version);
+            openReq.Username = m_userName;
             TOpenSessionResp openResp = m_Client.OpenSession(openReq);
+           
             openResp.Status.CheckStatus();
             return openResp.SessionHandle;
         }
