@@ -2,6 +2,7 @@
 <package >
   <metadata>
     <id>Gridsum.HiveThrift</id>
+	<version>0.1.5.1</version>
     <title>Gridsum.HiveThrift</title>
     <authors>GridsumDevTeam</authors>
     <owners>GridsumDevTeam</owners>
