@@ -4,13 +4,11 @@ stages:
   - build
   - publish
 
-before_script:
-  - dotnet restore
-
 build:
   stage: build
   script:
-    - cd HiveThrift && dotnet build
+    - cd HiveThrift 
+    - dotnet build
 
 publish:
   stage: publish
