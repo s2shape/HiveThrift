@@ -3,6 +3,10 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <Version>0.1.5.1</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Mikhail Burilov</Authors>
+    <Company>Second Sight</Company>
+    <Description>Library to connect to Hive instances using Thrift protocol</Description>
   </PropertyGroup>
 
   <ItemGroup>
