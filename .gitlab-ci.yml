@@ -10,11 +10,12 @@ before_script:
 build:
   stage: build
   script:
-    - dotnet build
+    - cd HiveThrift && dotnet build
 
 publish:
   stage: publish
   script:
+    - cd HiveThrift
     - dotnet build
     - dotnet publish
     - dotnet nuget push HiveThrift/HiveThrift/HiveThrift/bin/Debug/*.nupkg -k $NUGET_KEY -s https://www.myget.org/F/s2/api/v2/package
